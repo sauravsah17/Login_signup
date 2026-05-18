@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c0c0e;
+      --surface: #141416;
+      --border: #2a2a30;
+      --accent: #e8d5a3;
+      --accent-dim: #c4b07a;
+      --text: #f0ece0;
+      --muted: #6b6760;
+      --error: #c0674a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(232,213,163,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 380px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 52px 44px 44px;
+      animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card::before, .card::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: var(--accent);
+      border-style: solid;
+    }
+    .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .card::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .subtitle {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+      animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .field:nth-child(3) { animation-delay: 0.08s; }
+    .field:nth-child(4) { animation-delay: 0.14s; }
+
+    label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder { color: var(--muted); opacity: 0.6; }
+
+    input:focus {
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 3px rgba(232,213,163,0.07);
+    }
+
+    button {
+      margin-top: 12px;
+      width: 100%;
+      background: var(--accent);
+      color: #0c0c0e;
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      animation: rise 0.7s 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    button:hover  { background: var(--accent-dim); }
+    button:active { transform: scale(0.99); }
+
+    .btn-signup {
+      background: #2a2a30;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+    .btn-signup:hover { background: #35353d; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Sign In</h1>
+    <p class="subtitle">Access your account</p>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="you@example.com" autocomplete="username" />
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+
+    <button type="button" onclick="login()">Login</button>
+    <button type="button" class="btn-signup" onclick="signup()">Sign Up</button>
+  </div>
+
+  <script>
+  async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+    const text = await response.text();
+    alert(text);
+  }
+
+  async function signup() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const response = await fetch("/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+    const text = await response.text();
+    alert(text);
+  }
+  </script>
+</body>
+</html>
